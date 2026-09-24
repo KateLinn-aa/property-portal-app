@@ -20,6 +20,12 @@ import type { City, ListingSearchParams, ListingType, PropertyType } from "@/typ
 const ANY = "ANY";
 const PAGE_SIZE = 12;
 
+const HERO_LISTING_TYPE_ITEMS = [{ value: ANY, label: "Buy or rent" }, ...LISTING_TYPES];
+const HERO_CITY_ITEMS = [{ value: ANY, label: "All Myanmar" }, ...CITIES];
+const DETAILED_CITY_ITEMS = [{ value: ANY, label: "Any city" }, ...CITIES];
+const DETAILED_LISTING_TYPE_ITEMS = [{ value: ANY, label: "Sale or rent" }, ...LISTING_TYPES];
+const DETAILED_PROPERTY_TYPE_ITEMS = [{ value: ANY, label: "Any type" }, ...PROPERTY_TYPES];
+
 interface Filters {
   q: string;
   city: City | typeof ANY;
@@ -121,6 +127,7 @@ export default function HomePage() {
               </div>
               <div className="grid grid-cols-2 gap-2 sm:contents">
                 <Select
+                  items={HERO_LISTING_TYPE_ITEMS}
                   value={filters.listingType}
                   onValueChange={(v) =>
                     setFilters((f) => ({ ...f, listingType: v as Filters["listingType"] }))
@@ -139,6 +146,7 @@ export default function HomePage() {
                   </SelectContent>
                 </Select>
                 <Select
+                  items={HERO_CITY_ITEMS}
                   value={filters.city}
                   onValueChange={(v) => setFilters((f) => ({ ...f, city: v as Filters["city"] }))}
                 >
@@ -212,6 +220,7 @@ export default function HomePage() {
             <div className="space-y-1">
               <Label className="text-xs text-muted-foreground">City</Label>
               <Select
+                items={DETAILED_CITY_ITEMS}
                 value={filters.city}
                 onValueChange={(v) => setFilters((f) => ({ ...f, city: v as Filters["city"] }))}
               >
@@ -232,6 +241,7 @@ export default function HomePage() {
             <div className="space-y-1">
               <Label className="text-xs text-muted-foreground">Listing type</Label>
               <Select
+                items={DETAILED_LISTING_TYPE_ITEMS}
                 value={filters.listingType}
                 onValueChange={(v) =>
                   setFilters((f) => ({ ...f, listingType: v as Filters["listingType"] }))
@@ -254,6 +264,7 @@ export default function HomePage() {
             <div className="space-y-1">
               <Label className="text-xs text-muted-foreground">Property type</Label>
               <Select
+                items={DETAILED_PROPERTY_TYPE_ITEMS}
                 value={filters.propertyType}
                 onValueChange={(v) =>
                   setFilters((f) => ({ ...f, propertyType: v as Filters["propertyType"] }))
@@ -311,6 +322,7 @@ export default function HomePage() {
             <div className="flex items-center gap-2">
               <Label className="text-xs text-muted-foreground">Sort by</Label>
               <Select
+                items={SORT_OPTIONS}
                 value={filters.sort}
                 onValueChange={(v) => setFilters((f) => ({ ...f, sort: v as Filters["sort"] }))}
               >
