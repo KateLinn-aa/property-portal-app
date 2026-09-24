@@ -14,7 +14,7 @@ npm run dev
 ```
 
 The app expects the `property-portal-api` backend (Express + Prisma + SQLite) to be running and
-reachable at the URL configured in `VITE_API_URL` (defaults to `http://localhost:3001`). Public
+reachable at the URL configured in `VITE_API_URL` (defaults to `http://localhost:4000`). Public
 browsing/search works without login; creating an account is required to post or manage listings.
 
 ## Scripts
@@ -28,27 +28,34 @@ browsing/search works without login; creating an account is required to post or 
 
 | Variable | Description | Default |
 |---|---|---|
-| `VITE_API_URL` | Base URL of the `property-portal-api` REST API | `http://localhost:3001` |
+| `VITE_API_URL` | Base URL of the `property-portal-api` REST API | `http://localhost:4000` |
 
 ## Project structure
 
 ```
 src/
-  components/       shared UI (Layout, ListingCard, RequireAuth) + components/ui (shadcn)
+  components/       shared UI (Layout, ListingCard, RequireAuth, ThemeToggle) + components/ui (shadcn)
   lib/
     api.ts          typed fetch client for every endpoint in SPEC.md §6
     auth-context.tsx JWT auth state (useAuth hook)
     constants.ts     city/listing-type/property-type labels
     format.ts         MMK currency formatting, photo URL resolution
-  pages/            Home, ListingDetail, Login, Register, NewListing, MyListings
+  pages/            Home, ListingDetail, Login, Register, NewListing, MyListings, Admin
   types.ts          TS types mirroring the Prisma schema (Listing, User, ListingPhoto, enums)
 ```
 
 ## Notes
 
-- shadcn/ui was initialized with `npx shadcn@latest init --template vite --base radix --preset nova --yes`
-  (the exact `--preset b7ClNFsdU` value from the spec is not a recognized preset ID and caused the
-  CLI to hang indefinitely; the built-in `nova` preset — Radix primitives + Geist/Lucide — was used
-  instead as a reasonable fallback). Components were added with `npx shadcn@latest add <name>`.
+- shadcn/ui was initialized with `npx shadcn@latest init --preset b7ClNFsdU --base base --yes --force --reinstall`
+  (the `--base base` flag is required — without it the CLI auto-detects any pre-existing Radix
+  dependency and silently serves a `radix-luma` variant instead of the requested `base-luma`).
+  This resolves to Base UI primitives (`@base-ui/react`), the `luma` style, `mist` base color, and
+  Phosphor icons (`@phosphor-icons/react`) rather than the more common Radix/Lucide combo. Components
+  were added with `npx shadcn@latest add <name> --overwrite`.
+- Light/dark mode is handled by `next-themes` (`ThemeProvider` in `src/main.tsx`, toggle button in
+  `src/components/theme-toggle.tsx`), driving the `.dark` CSS variables in `src/index.css`. Defaults
+  to the OS preference and persists the user's choice in `localStorage`.
 - The JWT is stored in `localStorage` and attached as `Authorization: Bearer <token>` on
   authenticated requests via `src/lib/api.ts`.
+- `/admin` (role `ADMIN` only) moderates every user's listings and lists all registered users —
+  see `src/pages/admin.tsx`.
