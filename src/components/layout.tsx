@@ -2,6 +2,7 @@ import { Buildings } from "@phosphor-icons/react";
 import type { ReactNode } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { useAuth } from "@/lib/auth-context";
 
 export function Layout({ children }: { children: ReactNode }) {
@@ -25,6 +26,7 @@ export function Layout({ children }: { children: ReactNode }) {
             <Button variant="ghost" nativeButton={false} render={<Link to="/" />}>
               Browse Listings
             </Button>
+            <ThemeToggle />
             {!isLoading && user ? (
               <>
                 <Button variant="ghost" nativeButton={false} render={<Link to="/listings/new" />}>
