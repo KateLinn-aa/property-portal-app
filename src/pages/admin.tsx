@@ -44,6 +44,9 @@ import type { AdminListingSearchParams, City, Listing, ListingStatus } from "@/t
 const ANY = "ANY";
 const PAGE_SIZE = 20;
 
+const CITY_FILTER_ITEMS = [{ value: ANY, label: "Any city" }, ...CITIES];
+const STATUS_FILTER_ITEMS = [{ value: ANY, label: "Any status" }, ...LISTING_STATUSES];
+
 interface Filters {
   city: City | typeof ANY;
   status: ListingStatus | typeof ANY;
@@ -154,6 +157,7 @@ function AdminListingsTab() {
         <div className="w-full space-y-1 sm:w-44">
           <Label className="text-xs text-muted-foreground">City</Label>
           <Select
+            items={CITY_FILTER_ITEMS}
             value={filters.city}
             onValueChange={(v) => setFilters((f) => ({ ...f, city: v as Filters["city"] }))}
           >
@@ -173,6 +177,7 @@ function AdminListingsTab() {
         <div className="w-full space-y-1 sm:w-44">
           <Label className="text-xs text-muted-foreground">Status</Label>
           <Select
+            items={STATUS_FILTER_ITEMS}
             value={filters.status}
             onValueChange={(v) => setFilters((f) => ({ ...f, status: v as Filters["status"] }))}
           >

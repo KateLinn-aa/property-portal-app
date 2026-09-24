@@ -260,6 +260,7 @@ function EditListingDialog({
             <div className="space-y-1.5">
               <Label>Listing type</Label>
               <Select
+                items={LISTING_TYPES}
                 value={form.listingType}
                 onValueChange={(v) => setForm((f) => ({ ...f, listingType: v as ListingType }))}
               >
@@ -278,6 +279,7 @@ function EditListingDialog({
             <div className="space-y-1.5">
               <Label>Property type</Label>
               <Select
+                items={PROPERTY_TYPES}
                 value={form.propertyType}
                 onValueChange={(v) => setForm((f) => ({ ...f, propertyType: v as PropertyType }))}
               >
@@ -296,6 +298,7 @@ function EditListingDialog({
             <div className="space-y-1.5">
               <Label>City</Label>
               <Select
+                items={CITIES}
                 value={form.city}
                 onValueChange={(v) => setForm((f) => ({ ...f, city: v as City }))}
               >

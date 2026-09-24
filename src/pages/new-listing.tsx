@@ -135,6 +135,7 @@ export default function NewListingPage() {
               <div className="space-y-1.5">
                 <Label>Listing type</Label>
                 <Select
+                  items={LISTING_TYPES}
                   value={watch("listingType")}
                   onValueChange={(v) => setValue("listingType", v as ListingType)}
                 >
@@ -154,6 +155,7 @@ export default function NewListingPage() {
               <div className="space-y-1.5">
                 <Label>Property type</Label>
                 <Select
+                  items={PROPERTY_TYPES}
                   value={watch("propertyType")}
                   onValueChange={(v) => setValue("propertyType", v as PropertyType)}
                 >
@@ -172,7 +174,11 @@ export default function NewListingPage() {
 
               <div className="space-y-1.5">
                 <Label>City</Label>
-                <Select value={watch("city")} onValueChange={(v) => setValue("city", v as City)}>
+                <Select
+                  items={CITIES}
+                  value={watch("city")}
+                  onValueChange={(v) => setValue("city", v as City)}
+                >
                   <SelectTrigger className="w-full">
                     <SelectValue />
                   </SelectTrigger>
